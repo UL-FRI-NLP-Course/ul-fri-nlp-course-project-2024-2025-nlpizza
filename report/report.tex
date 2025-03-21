@@ -31,20 +31,20 @@
 %----------------------------------------------------------------------------------------
 
 % Header
-\JournalInfo{FRI Natural language processing course 2021}
+\JournalInfo{FRI Natural language processing course 2025}
 
 % Interim or final report
 \Archive{Project report} 
 %\Archive{Final report} 
 
 % Article title
-\PaperTitle{Natural language processing course Latex Template} 
+\PaperTitle{Improving prompt sensitivity of LLMs} 
 
 % Authors (student competitors) and their info
-\Authors{John Doe, Jane Doe, and Mike Smith}
+\Authors{Gonçalo Cardoso, Gopika Krishnan, Ali Muhammad}
 
 % Advisors
-\affiliation{\textit{Advisors: Slavko Žitnik}}
+\affiliation{\textit{Advisors: }}
 
 % Keywords
 \Keywords{Keyword1, Keyword2, Keyword3 ...}
@@ -77,127 +77,50 @@ The abstract goes here. The abstract goes here. The abstract goes here. The abst
 %----------------------------------------------------------------------------------------
 
 \section*{Introduction}
-	These latex files are intended to serve as a the template for the NLP course at FRI.  The template is adapted from the FRI Data Science Project Competition. template  If you find mistakes in the template or have problems using it, please consult Jure Demšar (\href{mailto:jure.demsar@fri.uni-lj.si}{jure.demsar@fri.uni-lj.si}).
+Large Language Models (LLMs) have demonstrated remarkable capabilities across various natural language processing tasks. However, a significant challenge in their practical application is their sensitivity to subtle variations in user prompts. Even minor changes in phrasing, such as word order or the inclusion of seemingly innocuous words, can lead to drastically different outputs in terms of content, quality, and even correctness. This phenomenon, known as prompt sensitivity, undermines the reliability and consistency of LLMs, hindering their widespread adoption in critical applications. Several studies like Mizrahi et al \cite{mizrahi-etal-2024-state} have highlighted this issue, demonstrating the instability of LLM performance under slight prompt perturbations, the work presented by Cao et al \cite{cao2024worstpromptperformancelarge} shows a difference of up to 45.48\% on performance for two paraphrased prompts. Understanding and mitigating prompt sensitivity is therefore crucial for building robust and dependable LLM-based systems.
+
+Prompt sensitivity has garnered increasing attention in the research community, leading to the development of various evaluation metrics and mitigation strategies.
+
+Chatterjee et al \cite{chatterjee-etal-2024-posix} introduced POSIX, a metric to evaluate the output invariance of LLMs across paraphrased prompts. ROBUSTALPACAEVAL (Cao et al \cite{cao2024worstpromptperformancelarge}), provides a benchmark for evaluating the robustness of instruction-following models against adversarial prompt variations by comparing model performances. Similarly, PromptSensiScore (Zhuo et al \cite{zhuo2024prosa}) offers a measure to assess the degree to which model outputs change with small prompt modifications. Mizrahi et al \cite{mizrahi-etal-2024-state} further introduce metrics such as MaxP, AvgP, and CPS to quantify both the peak and consistency of model performance across prompt variations. These metrics provide valuable tools for analyzing and comparing the prompt sensitivity of different LLMs and prompting techniques. 
+
+Researchers have explored various approaches to reduce the sensitivity of LLMs to prompt variations. Techniques like voting, where multiple responses generated from slightly different prompts are aggregated to produce a more stable and reliable output and self-refinement techniques, where the model iteratively refines its own output based on different prompt variations have been tested by Cao et al \cite{cao2024worstpromptperformancelarge} with non promising results although voting showcases a stable performance. 
+Prompting strategies such as Few-Shot learning (Zhuo et al \cite{zhuo2024prosa}), Chain-of-Thought Prompting (Lu et al \cite{lu2024promptsdifferenttermssensitivity}), and General Knowledge Prompting (Lu et al \cite{lu2024promptsdifferenttermssensitivity}) aim to guide the model towards more consistent and accurate responses by providing relevant context or reasoning steps within the prompt itself. The results of these strategies are more promising but there is a lack of generality for different models.  
 	
-	In the Introduction section you should write about the relevance of your work (what is the purpose of the project, what will we solve) and about related work (what solutions for the problem already exist). Where appropriate, reference scientific work conducted by other researchers. For example, the work done by Demšar et al. \cite{Demsar2016BalancedMixture} is very important for our project. The abbreviation et al. is for et alia, which in latin means and others, we use this abbreviation when there are more than two authors of the work we are citing. If there are two authors (or if there is a single author) we just write down their surnames. For example, the work done by Demšar and Lebar Bajec \cite{Demsar2017LinguisticEvolution} is also important for successful completion of our project.
 
 
 %------------------------------------------------
 
-\section*{Methods}
+\section*{Planned Methods}
 
-Use the Methods section to describe what you did an how you did it -- in what way did you prepare the data, what algorithms did you use, how did you test various solutions ... Provide all the required details for a reproduction of your work.
+To investigate and mitigate prompt sensitivity in LLMs, we will benchmark different prompting strategies, evaluate reasoning models for robustness, and explore fine-tuning for controlled text generation. We will conduct experiments on open-source models that can be manipulated locally, such as LLaMA, Mistral and Deepseek models.
 
-Below are \LaTeX examples of some common elements that you will probably need when writing your report (e.g. figures, equations, lists, code examples ...).
+We will first test prompting strategies like Few-Shot Learning, Chain-of-Thought Prompting, General Knowledge Prompting, voting, and self-refinement. By comparing outputs across paraphrased prompts, we aim to assess their impact on response stability. Additionally, we will evaluate reasoning models, such as DeepSeek 7B and LLaMA 3, which have been shown to exhibit stronger logical consistency, to determine whether their structured reasoning capabilities contribute to lower sensitivity to prompt variations. We have not found literature of this type of work so we think it can be promising.
 
-
-\subsection*{Equations}
-
-You can write equations inline, e.g. $\cos\pi=-1$, $E = m \cdot c^2$ and $\alpha$, or you can include them as separate objects. The Bayes’s rule is stated mathematically as:
-
-\begin{equation}
-	P(A|B) = \frac{P(B|A)P(A)}{P(B)},
-	\label{eq:bayes}
-\end{equation}
-
-where $A$ and $B$ are some events. You can also reference it -- the equation \ref{eq:bayes} describes the Bayes's rule.
-
-\subsection*{Lists}
-
-We can insert numbered and bullet lists:
-
-% the [noitemsep] option makes the list more compact
-\begin{enumerate}[noitemsep] 
-	\item First item in the list.
-	\item Second item in the list.
-	\item Third item in the list.
-\end{enumerate}
-
-\begin{itemize}[noitemsep] 
-	\item First item in the list.
-	\item Second item in the list.
-	\item Third item in the list.
-\end{itemize}
-
-We can use the description environment to define or describe key terms and phrases.
-
-\begin{description}
-	\item[Word] What is a word?.
-	\item[Concept] What is a concept?
-	\item[Idea] What is an idea?
-\end{description}
+As another of the tools to bring insights into prompt sensitivity, we plan to use adversarial prompting to systematically vary input phrasing while preserving intent.  Recent work has framed this brittleness in terms of adversarial robustness, showing that large language models are highly sensitive to carefully crafted prompt variations in attack scenarios (Yang et al \cite{yang2024assessingadversarialrobustnesslarge}). By drawing from this field, we aim to surface inconsistencies in model behavior and use these insights to inform our broader methodology for improving prompt stability.
 
 
-\subsection*{Random text}
+Finally, we will explore fine tuning techniques, such as the ones presented on Zhou et al \cite{zhou2023controlledtextgenerationnatural} to understand the impact of controlled text generation on prompt sensitivity.
 
-This text is inserted only to make this template look more like a proper report. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit dictum facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam convallis tellus velit, quis ornare ipsum aliquam id. Maecenas tempus mauris sit amet libero elementum eleifend. Nulla nunc orci, consectetur non consequat ac, consequat non nisl. Aenean vitae dui nec ex fringilla malesuada. Proin elit libero, faucibus eget neque quis, condimentum laoreet urna. Etiam at nunc quis felis pulvinar dignissim. Phasellus turpis turpis, vestibulum eget imperdiet in, molestie eget neque. Curabitur quis ante sed nunc varius dictum non quis nisl. Donec nec lobortis velit. Ut cursus, libero efficitur dictum imperdiet, odio mi fermentum dui, id vulputate metus velit sit amet risus. Nulla vel volutpat elit. Mauris ex erat, pulvinar ac accumsan sit amet, ultrices sit amet turpis.
+%------------------------------------------------
 
-Phasellus in ligula nunc. Vivamus sem lorem, malesuada sed pretium quis, varius convallis lectus. Quisque in risus nec lectus lobortis gravida non a sem. Quisque et vestibulum sem, vel mollis dolor. Nullam ante ex, scelerisque ac efficitur vel, rhoncus quis lectus. Pellentesque scelerisque efficitur purus in faucibus. Maecenas vestibulum vulputate nisl sed vestibulum. Nullam varius turpis in hendrerit posuere.
+\section*{Datasets}
 
+For our project on improving prompt sensitivity in LLMs, we have collected diverse prompt datasets from three key repositories that offer rich, data-centric resources:
 
-\subsection*{Figures}
+\textbf{Multi-Prompt LLM Evaluation Dataset:} This repository contains an extensive collection of automatically generated and manually validated instruction paraphrases. The dataset is organized into CSV files each corresponding to specific tasks from benchmarks such as LMentry and BBH. These files include detailed metrics such as model accuracies, correctness assessments, and ranking information for each paraphrase. Additionally, JSON files with aggregated results are provided, allowing for statistical analysis of how different prompt phrasings impact model performance. This dataset is introduced in \cite{mizrahi-etal-2024-state}.\\
+\textbf{Link:} \url{https://github.com/SLAB-NLP/Multi-Prompt-LLM-Evaluation}
 
-You can insert figures that span over the whole page, or over just a single column. The first one, \figurename~\ref{fig:column}, is an example of a figure that spans only across one of the two columns in the report.
+\vspace{1em}
+\textbf{POSIX Dataset:} In addition to its code, the POSIX repository supplies datasets comprising sets of intent-aligned prompts paired with model-generated responses. Each dataset includes multiple variations of the same query, covering modifications in wording, spelling, and template structure, which enable us to compute key metrics such as response diversity, distribution entropy, semantic coherence, and confidence variance. This dataset forms the backbone of the quantitative analysis presented in \cite{chatterjee-etal-2024-posix}.\\
+\textbf{Link:} \url{https://github.com/kowndinya-renduchintala/POSIX}
 
-\begin{figure}[ht]\centering
-	\includegraphics[width=\linewidth]{single_column.pdf}
-	\caption{\textbf{A random visualization.} This is an example of a figure that spans only across one of the two columns.}
-	\label{fig:column}
-\end{figure}
+\vspace{1em}
+\textbf{RobustAlpacaEval Dataset:} This repository provides a benchmark dataset specifically designed to assess worst-case prompt performance. Based on a refined subset of the TinyAlpacaEval benchmark, the dataset features 10 manually refined paraphrases per query. This dataset is presented in \cite{cao2024worstpromptperformancelarge}.\\
+\textbf{Link:} \url{https://github.com/bwcao/RobustAlpacaEval}
 
-On the other hand, \figurename~\ref{fig:whole} is an example of a figure that spans across the whole page (across both columns) of the report.
-
-% \begin{figure*} makes the figure take up the entire width of the page
-\begin{figure*}[ht]\centering 
-	\includegraphics[width=\linewidth]{whole_page.pdf}
-	\caption{\textbf{Visualization of a Bayesian hierarchical model.} This is an example of a figure that spans the whole width of the report.}
-	\label{fig:whole}
-\end{figure*}
+Collectively, these datasets provide a robust foundation for analyzing the variability in LLM performance across diverse prompt formulations, a critical component for our study on reducing prompt sensitivity.
 
 
-\subsection*{Tables}
-
-Use the table environment to insert tables.
-
-\begin{table}[hbt]
-	\caption{Table of grades.}
-	\centering
-	\begin{tabular}{l l | r}
-		\toprule
-		\multicolumn{2}{c}{Name} \\
-		\cmidrule(r){1-2}
-		First name & Last Name & Grade \\
-		\midrule
-		John & Doe & $7.5$ \\
-		Jane & Doe & $10$ \\
-		Mike & Smith & $8$ \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:label}
-\end{table}
-
-
-\subsection*{Code examples}
-
-You can also insert short code examples. You can specify them manually, or insert a whole file with code. Please avoid inserting long code snippets, advisors will have access to your repositories and can take a look at your code there. If necessary, you can use this technique to insert code (or pseudo code) of short algorithms that are crucial for the understanding of the manuscript.
-
-\lstset{language=Python}
-\lstset{caption={Insert code directly from a file.}}
-\lstset{label={lst:code_file}}
-\lstinputlisting[language=Python]{code/example.py}
-
-\lstset{language=R}
-\lstset{caption={Write the code you want to insert.}}
-\lstset{label={lst:code_direct}}
-\begin{lstlisting}
-import(dplyr)
-import(ggplot)
-
-ggplot(diamonds,
-	   aes(x=carat, y=price, color=cut)) +
-  geom_point() +
-  geom_smooth()
-\end{lstlisting}
 
 %------------------------------------------------
 
@@ -205,13 +128,6 @@ ggplot(diamonds,
 
 Use the results section to present the final results of your work. Present the results in a objective and scientific fashion. Use visualisations to convey your results in a clear and efficient manner. When comparing results between various techniques use appropriate statistical methodology.
 
-\subsection*{More random text}
-
-This text is inserted only to make this template look more like a proper report. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit dictum facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam convallis tellus velit, quis ornare ipsum aliquam id. Maecenas tempus mauris sit amet libero elementum eleifend. Nulla nunc orci, consectetur non consequat ac, consequat non nisl. Aenean vitae dui nec ex fringilla malesuada. Proin elit libero, faucibus eget neque quis, condimentum laoreet urna. Etiam at nunc quis felis pulvinar dignissim. Phasellus turpis turpis, vestibulum eget imperdiet in, molestie eget neque. Curabitur quis ante sed nunc varius dictum non quis nisl. Donec nec lobortis velit. Ut cursus, libero efficitur dictum imperdiet, odio mi fermentum dui, id vulputate metus velit sit amet risus. Nulla vel volutpat elit. Mauris ex erat, pulvinar ac accumsan sit amet, ultrices sit amet turpis.
-
-Phasellus in ligula nunc. Vivamus sem lorem, malesuada sed pretium quis, varius convallis lectus. Quisque in risus nec lectus lobortis gravida non a sem. Quisque et vestibulum sem, vel mollis dolor. Nullam ante ex, scelerisque ac efficitur vel, rhoncus quis lectus. Pellentesque scelerisque efficitur purus in faucibus. Maecenas vestibulum vulputate nisl sed vestibulum. Nullam varius turpis in hendrerit posuere.
-
-Nulla rhoncus tortor eget ipsum commodo lacinia sit amet eu urna. Cras maximus leo mauris, ac congue eros sollicitudin ac. Integer vel erat varius, scelerisque orci eu, tristique purus. Proin id leo quis ante pharetra suscipit et non magna. Morbi in volutpat erat. Vivamus sit amet libero eu lacus pulvinar pharetra sed at felis. Vivamus non nibh a orci viverra rhoncus sit amet ullamcorper sem. Ut nec tempor dui. Aliquam convallis vitae nisi ac volutpat. Nam accumsan, erat eget faucibus commodo, ligula dui cursus nisi, at laoreet odio augue id eros. Curabitur quis tellus eget nunc ornare auctor.
 
 
 %------------------------------------------------
@@ -236,3 +152,4 @@ Here you can thank other persons (advisors, colleagues ...) that contributed to 
 
 
 \end{document}
+
