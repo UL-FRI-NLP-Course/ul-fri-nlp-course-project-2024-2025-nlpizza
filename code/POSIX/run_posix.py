@@ -127,14 +127,14 @@ def main():
     end_index = int(sys.argv[2])
 
     # Load prompts
-    with open("/content/alpaca_prompts.json", "r") as f:
+    with open("alpaca_prompts.json", "r") as f:
         alpaca_data = json.load(f)
     intent_prompt_sets = [item["prompts"] for item in alpaca_data[start_index:end_index]]
     print(f"Processing prompt sets {start_index} to {end_index} ({len(intent_prompt_sets)} total)")
 
 
     # Load model
-    model_id = "tiiuae/falcon-rw-1b"
+    model_id = "tiiuae/falcon-7b-instruct"
     print(f"Loading model: {model_id}")
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
