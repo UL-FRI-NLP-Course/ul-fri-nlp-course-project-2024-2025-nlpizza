@@ -10,7 +10,7 @@
 % Antonio Valente (antonio.luis.valente@gmail.com)
 %
 % License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% CC BY-NC-SA 3.0 (http://crInitial implementation / baseline with results - Updated Submission 1 parts - Implemented at least one solution with analysis - Future directions and ideas - Well organized repository eativecommons.org/licenses/by-nc-sa/3.0/)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,6 +29,7 @@
 %----------------------------------------------------------------------------------------
 %	ARTICLE INFORMATION
 %----------------------------------------------------------------------------------------
+\usepackage{svg}
 
 % Header
 \JournalInfo{FRI Natural language processing course 2025}
@@ -38,7 +39,7 @@
 %\Archive{Final report} 
 
 % Article title
-\PaperTitle{Improving prompt sensitivity of LLMs} 
+\PaperTitle{Improving Prompt Sensitivity of LLMs} 
 
 % Authors (student competitors) and their info
 \Authors{Gonçalo Cardoso, Gopika Krishnan, Ali Muhammad}
@@ -62,7 +63,7 @@ The abstract goes here. The abstract goes here. The abstract goes here. The abst
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-
+\sloppy
 % Makes all text pages the same height
 \flushbottom 
 
@@ -92,7 +93,15 @@ Prompting strategies such as Few-Shot learning (Zhuo et al \cite{zhuo2024prosa})
 
 \section*{Planned Methods}
 
-To investigate and mitigate prompt sensitivity in LLMs, we will benchmark different prompting strategies, evaluate reasoning models for robustness, and explore fine-tuning for controlled text generation. We will conduct experiments on open-source models that can be manipulated locally, such as LLaMA, Mistral and Deepseek models.
+To investigate and mitigate prompt sensitivity in LLMs, we will benchmark different prompting strategies, evaluate reasoning models for robustness, and explore fine-tuning for controlled text generation. We will conduct experiments on open-source models that can be manipulated locally.
+
+The language models used in this study are:
+\begin{itemize}
+    \item Meta AI's second-generation Llama model with 7 billion parameters, fine-tuned for chat and hosted on Hugging Face. \textbf{Technical Name:} Llama-2-7b-chat-hf
+    \item A compact yet capable language model developed by MosaicML. \textbf{Technical Name:} mosaicml/phi2
+    \item A 6.7 billion parameter model from DeepSeek AI, specifically designed and instruction-tuned for code-related tasks. \textbf{Technical Name:} deepseek-coder-6.7b-instruct
+    \item Mistral AI's 7 billion parameter model that has been instruction-tuned. "v0.1" indicates the initial release. \textbf{Technical Name:} mistral-7b-instruct-v0.1
+\end{itemize}
 
 We will first test prompting strategies like Few-Shot Learning, Chain-of-Thought Prompting, General Knowledge Prompting, voting, and self-refinement. By comparing outputs across paraphrased prompts, we aim to assess their impact on response stability. Additionally, we will evaluate reasoning models, such as DeepSeek 7B and LLaMA 3, which have been shown to exhibit stronger logical consistency, to determine whether their structured reasoning capabilities contribute to lower sensitivity to prompt variations. We have not found literature of this type of work so we think it can be promising.
 
@@ -124,18 +133,56 @@ Collectively, these datasets provide a robust foundation for analyzing the varia
 
 %------------------------------------------------
 
-\section*{Results}
+\section*{Results (Intermediate Status)}
 
-Use the results section to present the final results of your work. Present the results in a objective and scientific fashion. Use visualisations to convey your results in a clear and efficient manner. When comparing results between various techniques use appropriate statistical methodology.
+Our initial implementation focused on evaluating prompt sensitivity using a custom version of the Prompt Sensitivity Index (POSIX) \cite{chatterjee-etal-2024-posix}. The official GitHub repository provided limited utility, so we opted for a clean and modular implementation tailored to our setup. Our version closely adheres to the original POSIX computation logic, measuring the log-probability divergence of model responses across paraphrased prompts. We ran experiments on the RobustAlpacaEval dataset (4996 prompt sets) using the \texttt{tiiuae/falcon-rw-1b} model. The POSIX pipeline was executed via SLURM array jobs on the HPC cluster, with 46 parallel jobs processing 100 sets each.
+
+We successfully generated baseline responses and calculated POSIX scores for each prompt set. Preliminary analysis shows substantial variability across prompt sets, with some exhibiting high sensitivity to rewording. To address this, we implemented a Chain-of-Thought (CoT) variant by modifying each prompt with the suffix ``\textit{Let's think step by step.}''
+
+\subsection*{POSIX Improvements via Chain-of-Thought Prompting}
+
+Quantitative results show a clear improvement in output stability. The average POSIX score dropped from 1.25 in the baseline to 0.59 with CoT prompting (a 47\% reduction in sensitivity). Figure~\ref{fig:posix_delta_hist} shows the full distribution of POSIX scores for both the baseline and CoT variants. The distribution for CoT is sharply left-shifted, indicating more consistent and stable responses across paraphrased prompts. CoT also eliminates several extreme outliers present in the baseline.
+
+\begin{figure}[h]
+    \centering
+    \includesvg[width=\linewidth]{figs/posix_delta_hist_cot_vs_baseline}
+    \caption{Histogram of POSIX score changes (CoT – Baseline). The majority of values are negative, indicating increased output stability under Chain-of-Thought prompting.}
+    \label{fig:posix_delta_hist}
+\end{figure}
+
+\subsection*{Sensitivity to Dataset Formatting Conventions}
+
+A qualitative examination of our prompt sets revealed that even the original dataset formatting (featuring explicit role indicators like \texttt{Q:}, \texttt{A:}, \texttt{question:}, or \texttt{answer:}) frequently confused the models. Rather than guiding the model toward cleaner completions, these structural cues often led to repetitive or shallow outputs, particularly in the baseline setting. 
+
+Adding Chain-of-Thought (CoT) prompting introduced structural regularity, often shifting responses to a numbered list format. This improved factuality and variety in cases where the prompt was only lightly paraphrased. However, when prompts included deeper noise, such as misspellings (e.g., \texttt{lisit okf tean interesting thingd}) or stylized tokens like \texttt{Q:::} or \texttt{||}, CoT completions remained brittle. In several cases, outputs hallucinated irrelevant entities or defaulted to unrelated QA-style answers (e.g., ``What is the name of the file?'').
+
+These findings suggest that while CoT prompting increases stability under superficial rewording, it does not provide robustness against noisier or syntactically corrupted inputs. The model’s behavior is sensitive not only to meaning but also to formatting patterns that disrupt its internal structure parsing.
+
+
+% We have also implemented semantic similarity scoring using Sentence Transformers to assess semantic drift across paraphrased prompts. This analysis is being finalized. In addition to measuring surface-level similarity, we aim to explore convergence depth: whether Chain-of-Thought prompting leads the model to settle on a consistent line of reasoning across paraphrased prompts. Rather than counting steps alone, we will analyze how early in the reasoning process responses begin to align, and how this convergence varies across different types of prompt variations. This will help us understand whether CoT stabilizes not just outputs, but the underlying reasoning trajectory, and under what conditions it fails to do so.
 
 
 
 %------------------------------------------------
+\section*{Discussion and Next Steps}
 
-\section*{Discussion}
+Our POSIX-based evaluation confirms that prompt phrasing significantly influences model behavior. Chain-of-Thought (CoT) prompting reduced sensitivity in many cases, but failures persisted under noisy or unconventional prompt structures.
 
-Use the Discussion section to objectively evaluate your work, do not just put praise on everything you did, be critical and exposes flaws and weaknesses of your solution. You can also explain what you would do differently if you would be able to start again and what upgrades could be done on the project in the future.
+To build on this, we plan to:
 
+\begin{itemize}[itemsep=2pt]
+    \item \textbf{Explore iterative self-checking:} Re-prompt the model over $k$ steps, each time including its previous output, to encourage internal consistency. We'll analyze performance-vs-cost trade-offs.
+    
+    \item \textbf{Test self-refinement:} Let the model rewrite prompts before answering, using instructions like \textit{``Rephrase the question and solve it.’’}
+
+    \item \textbf{Evaluate stronger models:} Run the same experiments on Mistral and LLaMA to assess how model scale affects sensitivity.
+
+    \item \textbf{Incorporate additional evaluation metrics:} Alongside POSIX, we plan to experiment with other evaluation methods presented in earlier works to provide a more comprehensive picture of model robustness.
+
+    \item \textbf{Introduce adversarial variants:} Generate controlled corruptions (e.g., typos, misplaced punctuation, odd structure) to explicitly stress-test robustness across methods.
+\end{itemize}
+
+These steps will help us better understand both the limitations of current prompting strategies and which combinations of techniques and models best improve response stability and meaning retention.
 
 %------------------------------------------------
 
