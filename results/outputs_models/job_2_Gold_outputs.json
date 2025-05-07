@@ -1,0 +1,122 @@
+{
+  "10": [
+    "A customer relationship management (CRM) system is designed to help businesses manage interactions with customers and potential customers. A data model for a CRM system should include the following entities:\n\n1. **Customer:** This entity represents a person or company that has interacted with the business. It includes attributes such",
+    "1. Customer Table\n- Customer ID (Primary Key)\n- First Name\n- Last Name\n- Email\n- Phone Number\n- Address\n\n2. Order Table\n- Order ID (Primary Key)\n- Customer ID (Foreign Key)\n- Order Date\n- Order Total\n\n3.",
+    "1. Define the problem: The goal is to build a customer relationship management (CRM) system that can predict the likelihood of a customer churning based on their past behavior and demographic information.\n2. Collect and preprocess data: Gather data on customer behavior, demographics, and churn",
+    "1. Customer\n    a. Customer ID\n    b. First Name\n    c. Last Name\n    d. Email\n    e. Phone Number\n    f. Address\n    g. City\n    h. State\n    i. Zip Code\n    j. Country\n\n2. Sales",
+    "1. Customer\n- id (primary key)\n- name\n- email\n- phone\n- address\n\n2. Order\n- id (primary key)\n- customer_id (foreign key)\n- order_date\n- order_total\n\n3. Order_Item\n- id",
+    "The data model for a customer relationship management (CRM) system would typically include several entities, such as customers, sales, products, and interactions. Here is an example of a possible data model:\n\n1. Customers: This entity would store information about each customer, such as their name, contact",
+    "1. Customer\n- CustomerID (Primary Key)\n- FirstName\n- LastName\n- Email\n- PhoneNumber\n- Address\n\n2. Sales\n- SalesID (Primary Key)\n- CustomerID (Foreign Key)\n- ProductID (Foreign Key)\n- Quantity\n-",
+    "1. Customer\n    - id (primary key)\n    - name\n    - email\n    - phone\n    - address\n\n2. Sales\n    - id (primary key)\n    - customer_id (foreign key)\n    - date\n    - amount\n\n3. Product",
+    "A customer relationship management (CRM) system is designed to help businesses manage interactions with customers and potential customers. A data model for a CRM system should include the following entities:\n\n1. **Customer:** This entity represents a person or company that has interacted with the business. It includes attributes such",
+    "1. Customer\n    - CustomerID (Primary Key)\n    - FirstName\n    - LastName\n    - Email\n    - PhoneNumber\n    - Address\n    - City\n    - State\n    - ZipCode\n    - Country\n\n2. SalesRep\n    - SalesRep"
+  ],
+  "11": [
+    "1. Introduction: This paragraph should introduce the topic of the essay and provide some background information. It should also include a thesis statement that outlines the main argument or point of the essay.\n\n2. Body Paragraph 1: This paragraph should focus on one main idea that supports the thesis statement.",
+    "1. Introduction: This paragraph should introduce the topic of the essay and provide some background information. It should also include a thesis statement that outlines the main argument of the essay.\n2. Body Paragraph 1: This paragraph should present the first main point of the essay and provide evidence to support it",
+    "1. Introduction: This is where you introduce the topic and provide some background information. It should include a thesis statement that outlines the main argument or points of the essay.\n2. Body Paragraph 1: This is where you present your first main point or argument. It should include supporting evidence and",
+    "1. Introduction\na. Background information\nb. Thesis statement\n2. Body\na. First paragraph\ni. Topic sentence\nii. Supporting sentences\niii. Evidence\nb. Second paragraph\ni. Topic sentence\nii. Supporting sentences\niii. Evidence\nc",
+    "1. Introduction\n* Briefly introduce the topic of the essay\n* Provide some background information on the topic\n* State the thesis statement\n2. Body Paragraph 1\n* Present the first main idea and supporting evidence\n* Use examples and anecdotes to illustrate the main idea",
+    "I. Introduction\nA. Background information on the topic\nB. Thesis statement\n\nII. Body\nA. First paragraph: Provide evidence to support the thesis\nB. Second paragraph: Provide additional evidence to support the thesis\nC. Third paragraph: Provide evidence to refute the",
+    "I. Introduction\nA. Background information on the topic\nB. Thesis statement\n\nII. Body\nA. First paragraph: Present the first main idea and supporting evidence\nB. Second paragraph: Present the second main idea and supporting evidence\nC. Third paragraph: Present the third main idea and",
+    "1. Introduction: This paragraph should introduce the topic of the essay and provide some background information. It should also include a thesis statement that outlines the main argument or point of the essay.\n\n2. Body Paragraph 1: This paragraph should focus on one main idea that supports the thesis statement.",
+    "1. Introduction: This is where you introduce the topic and provide some background information. It should include a thesis statement that outlines the main argument or points of the essay.\n\n2. Body Paragraph 1: This is the first body paragraph and should focus on one main idea that supports the thesis",
+    "1. Introduction\nb::: 2. Background Information\nc::: 3. Thesis Statement\nd::: 4. Body Paragraph 1\ne::: 5. Body Paragraph 2\nf::: 6. Body Paragraph 3\ng::: 7"
+  ],
+  "12": [
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees.\n2. Prepare the site: Clear the area of any debris, weeds or grass. Dig a small hole to mix in some soil to create a rich composting environment.\n3",
+    "1000000000000000000000000000000000000000000000000000000000000000",
+    "1. Research local composting facilities or start a home composting system.\n2. Collect food scraps such as fruit and vegetable peels, coffee grounds, tea bags, and other organic waste.\n3. Avoid composting meat, dairy, and oil-based foods.\n4",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees.\n2. Prepare the site: Clear the area of any debris, weeds, or grass. Dig a small hole to mix in some soil and compost to help the new compost pile",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees. \n2. Prepare the site: Clear the area of any debris, grass or weeds. Dig a small hole to mix in some soil to create a rich composting environment.",
+    "2021-09-29 12:34:56",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees.\n2. Prepare the site: Clear the area of any debris, weeds, or grass. Dig a small hole to mix in some soil and compost to help the new compost pile",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees.\n2. Prepare the site: Clear the area of any debris, weeds or grass. Dig a small hole to mix in some soil to create a rich composting environment.\n3",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees. Make sure the area is well-drained and receives partial shade.\n\n2. Select a composting method: There are several composting methods to choose from, including traditional compost",
+    "1. Choose a location: Select an area in your yard that is easily accessible and away from any structures or trees. You may also consider using a compost bin or tumbler to contain the compost.\n\n2. Collect food scraps: Start collecting food scraps such as fruit and vegetable peels"
+  ],
+  "13": [
+    "\"Arjun: The Quest for Destiny\"",
+    "\"Arjun: The Quest for Destiny\"",
+    "\"Arjun: The Quest for Destiny\"",
+    "\"Arjun: The Quest for Destiny\"",
+    "Arjun stood at the edge of the cliff, staring out at the vast expanse of the ocean before him. The wind whipped through his hair and he could feel the adrenaline coursing through his veins. He had always been a fearless adventurer, but this was different",
+    "\"Arjun: The Quest for Destiny\"",
+    "\"Echoes of Arujn\"",
+    "1. Arjun: The Quest for Destiny 2. Arjun: The Warrior Prince 3. Arjun: The Last Samurai 4. Arjun: The Rise of the Phoenix 5. Arjun: The Dragon Slayer 6. Arjun",
+    "\"Arjun: The Quest for Destiny\"",
+    "\"Arjun: The Quest for Destiny\""
+  ],
+  "14": [
+    "1. Start by acknowledging their hard work and progress so far. \n2. Remind them of the importance of the project and how it fits into the bigger picture. \n3. Break down the remaining tasks into smaller, more manageable pieces, and create a plan together to tackle them.",
+    "1. Start by acknowledging their hard work and progress so far. Let them know that you appreciate their efforts and that you believe in their ability to meet the deadline.\n2. Offer specific suggestions or resources that may help them overcome any obstacles or challenges they are facing. This could include providing additional training,",
+    "1. Start by acknowledging their hard work and progress so far. \n2. Remind them of the importance of the project and how it fits into the bigger picture. \n3. Break down the remaining tasks into smaller, more manageable pieces, and create a plan together to tackle them.",
+    "1. Offer words of encouragement and support. Let them know that you believe in their abilities and that you are there to help them in any way you can.\n2. Provide specific feedback on their progress and offer suggestions for improvement. This can help them see what they need to do to meet their deadline",
+    "1. Set achievable goals: Help your colleague to break down their project into smaller, more manageable tasks. This will make it easier for them to see progress and stay motivated.\n2. Provide support: Offer to help your colleague with any challenges they may be facing. This could be",
+    "1. Remind them of the importance of the project and how it fits into the bigger picture.\n2. Offer to help them in any way you can, such as providing resources or assistance with specific tasks.\n3. Encourage them to break the deadline down into smaller, more manageable tasks and",
+    "1. Encourage them to break down the task into smaller, more manageable pieces.\n2. Offer to help them with any specific tasks or challenges they may be facing.\n3. Provide them with resources or tools that can help them work more efficiently.\n4. Remind them of the",
+    "1. Provide encouragement: Start by offering positive reinforcement and encouragement. Let them know that you believe in their abilities and that you're confident they can meet the deadline.\n\n2. Break down the task: If the task seems overwhelming, break it down into smaller, more manageable parts.",
+    "1. Provide encouragement: Start by providing positive reinforcement and encouragement. Let them know that you believe in their abilities and that you are confident that they can meet the deadline.\n\n2. Break down the task: If the task seems overwhelming, break it down into smaller, more manageable parts.",
+    "1. Start by acknowledging their hard work and progress so far. 2. Express your confidence in their ability to complete the task on time. 3. Remind them of the importance of the project and how it fits into the bigger picture. 4. Offer any assistance or resources they may need to"
+  ],
+  "15": [
+    "1. Bromeliads \n2. Orchids \n3. Heliconias \n4. Kapok trees \n5. Rubber trees",
+    "1",
+    "1. Bamboo \n2. Kapok \n3. Mahogany \n4. Rubber \n5. Teak",
+    "1. Bromeliads\n2. Orchids\n3. Heliconias\n4. Passionflowers\n5. Water lilies\n6. Cattleyas\n7. Hibiscus\n8. Bougainvilleas\n9. Bird of Paradise flowers\n10",
+    "1. Bromeliads \n2. Orchids \n3. Heliconias \n4. Kapok trees \n5. Rubber trees",
+    "1. Bromeliads\n2. Orchids\n3. Heliconias\n4. Passionflowers\n5. Water lilies\n6. Ferns\n7. Mosses\n8. Fungi\n9. Bamboo\n10. Palms",
+    "1. Bromeliads \n2. Orchids \n3. Heliconias \n4. Kapok trees \n5. Rubber trees",
+    "1. Bromeliads \n2. Orchids \n3. Heliconias \n4. Kapok trees \n5. Rubber trees.",
+    "1. Bromeliad \n2. Orchid \n3. Heliconia \n4. Kapok Tree \n5. Rubber Tree",
+    "1. Bromeliads 2. Orchids 3. Heliconias 4. Kapok trees 5. Rubber trees"
+  ],
+  "16": [
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company you're interviewing with. This will help you better understand the company's culture, mission, and values, and will allow you to tailor your responses to fit the company's goals.",
+    "1. Research the company and the position you are applying for in advance. This will help you understand the company's culture, mission, and values, and allow you to tailor your responses to the interviewer's questions.\n2. Practice your responses to common interview questions. This will help you feel more",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company you're applying to. This will help you understand the company's culture, mission, and values, and will allow you to tailor your responses to the interviewer's questions.\n2",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company, its culture, and its products or services. This will show the interviewer that you are genuinely interested in the company and give you a better understanding of what the company is looking for in a candidate.",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company, its culture, and its products or services. This will help you demonstrate your knowledge and interest in the company during the interview, making you a more appealing candidate.\n\n2. Practice your responses:",
+    "1. Research the company and the position you are applying for in advance. This will help you understand the company's culture, mission, and values, as well as the role and responsibilities of the position.\n2. Practice your responses to common interview questions. This will help you feel more confident and prepared during",
+    "1. Research the company and its products/services: Before your interview, take the time to learn as much as you can about the company you're interviewing with. This will help you understand the company's values, mission, and culture, and will also give you a better understanding of the products or services",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company you're interviewing with. This will help you better understand the company's culture, mission, and values, and will allow you to tailor your responses to fit the company's goals.",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company you're interviewing with. This will help you demonstrate your knowledge and interest in the company during the interview, making you a more appealing candidate.\n\n2. Practice your responses: Prepare answers",
+    "1. Research the company: Before your interview, take the time to learn as much as you can about the company you're interviewing with. This will help you better understand the company's culture, mission, and values, and will allow you to tailor your responses to fit the company's goals."
+  ],
+  "17": [
+    "1. Face painting and tattoos\n2. Balloon animals and other inflatable toys\n3. Musical chairs and dance party\n4. Pi\u00f1ata and candy scavenger hunt\n5. Arts and crafts station\n6. Bounce house and slides\n7. Storytelling and puppet",
+    "1. Face painting and Tattoo booth \n2. Balloon animals and Pi\u00f1ata \n3. Musical chairs and Simon says \n4. Bounce house and Slip and slide \n5. Scavenger hunt and relay race \n6. Karaoke and dance party",
+    "1. Face painting and Tattoo booth \n2. Balloon animals and Pi\u00f1ata \n3. Musical chairs and Simon says \n4. Bounce house and Slip and slide \n5. Scavenger hunt and relay race \n6. Karaoke and dance party",
+    "1000",
+    "1. Face painting\n2. Balloon animals\n3. Pi\u00f1ata\n4. Musical chairs\n5. Bouncy castle\n6. Scavenger hunt\n7. Coloring station\n8. Cupcake decorating\n9. Karaoke\n10. Magic show\n1",
+    "1. Face painting: Provide a variety of colorful paints and stencils for children to choose and paint fun designs on their faces.\n2. Balloon animals: Hire a professional balloon artist to make balloon animals, swords, and other shapes for guests to take home.\n3",
+    "1. Face painting: Hire a professional face painter to paint fun designs on the children's faces.\n2. Balloon animals: Hire a balloon artist to make balloon animals, swords, and other fun shapes for the children.\n3. Musical chairs: Set up a game of",
+    "1. Face painting and tattoos\n2. Balloon animals and other inflatable toys\n3. Musical chairs and dance party\n4. Pi\u00f1ata and candy scavenger hunt\n5. Arts and crafts station\n6. Bounce house and slides\n7. Storytelling and puppet",
+    "1. Face painting\n2. Balloon animals\n3. Musical chairs\n4. Pi\u00f1ata\n5. Scavenger hunt\n6. Bounce house\n7. Coloring station\n8. Cupcake decorating\n9. Puppet show\n10. Outdoor games like",
+    "1. Face painting: Provide a variety of colorful paints and stencils for children to choose and paint fun designs on their faces.\n2. Balloon animals: Hire a professional balloon artist to make balloon animals, swords, and other shapes for guests to take home.\n3"
+  ],
+  "18": [
+    "1. Snoring loudly during sleep \n2. Pauses in breathing or breathing that sounds labored or strained \n3. Waking up frequently throughout the night \n4. Feeling tired or excessively sleepy during the day \n5. Difficulty concentrating or remembering things",
+    "1. Shortness of breath \n2. Wheezing \n3. Chest tightness \n4. Rapid breathing \n5. Coughing \n6. Fatigue \n7. Difficulty sleeping \n8. Swelling of the ankles, feet, and",
+    "1. Difficulty breathing during sleep\n2. Loud snoring\n3. Gasping or choking during sleep\n4. Morning headaches\n5. Daytime sleepiness or fatigue\n6. Irritability or mood changes\n7. Difficulty concentrating\n8. Memory problems",
+    "1. Excessive daytime sleepiness \n2. Loud snoring \n3. Gasping or choking during sleep \n4. Irregular breathing during sleep \n5. Headaches in the morning \n6. Difficulty concentrating \n7. Mood changes",
+    "Sleep apnea is a sleep disorder characterized by interrupted breathing during sleep. The most common symptoms of sleep apnea include:\n\n1. Loud snoring: This is the most common symptom of sleep apnea. It occurs when the airways become narrow and the breathing becomes labored.",
+    "1. Excessive daytime sleepiness\n2. Loud snoring or gasping during sleep\n3. Irregular breathing during sleep\n4. Pauses in breathing during sleep\n5. Waking up frequently during the night\n6. Difficulty concentrating or remembering things\n7. Mood",
+    "1. Snoring loudly or irregularly during sleep \n2. Pauses or gasps for breath while sleeping \n3. Excessive daytime sleepiness or fatigue \n4. Difficulty concentrating or remembering things \n5. Mood changes, such as irritability or depression",
+    "Sleep apnea is a sleep disorder characterized by interrupted breathing during sleep. The symptoms may include:\n\n1. Loud snoring: This is the most common symptom of sleep apnea. It occurs when the airways become narrow and the breath is obstructed.\n\n2. Breathing",
+    "Answer: Sleep apnea is a sleep disorder characterized by pauses in breathing or reduced breathing during sleep. The symptoms can vary from person to person, but the most common ones include:\n\n1. Loud snoring: This is one of the most common symptoms of sleep apnea. The snoring",
+    "1. Excessive daytime sleepiness\n2. Loud snoring or gasping during sleep\n3. Difficulty concentrating or remembering things\n4. Mood changes, such as irritability or depression\n5. Weakness or fatigue during daily activities\n6. Headaches in the"
+  ],
+  "19": [
+    "Healthy Veggie Omelette Recipe\n\nIngredients:\n- 2 large eggs\n- 1/2 cup diced vegetables (such as bell peppers, onions, mushrooms, spinach)\n- 1/8 teaspoon salt\n- 1",
+    "1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA: 1\n\nA",
+    "**Avocado Toast with Egg and Spinach**\n\nIngredients:\n- 2 slices of whole grain bread\n- 1 avocado\n- 1 tablespoon of lemon juice\n- Salt and pepper\n- 2 large eggs\n- A handful of spin",
+    "1000\n\nA: 1000",
+    "1. Greek Yogurt Parfait\n\nIngredients:\n- 1 cup nonfat Greek yogurt\n- 1/2 cup mixed berries (fresh or frozen)\n- 1/4 cup low-fat granola\n- 1 tbsp honey",
+    "1. Greek Yogurt Parfait\n\nIngredients:\n- 1 cup nonfat Greek yogurt\n- 1/2 cup mixed berries (fresh or frozen)\n- 1/4 cup low-fat granola\n- 1 tbsp honey",
+    "1. Start your day with a glass of water to hydrate your body and flush out toxins.\n2. Enjoy a healthy breakfast that includes protein, complex carbohydrates, and healthy fats.\n3. Take a 10-15 minute walk to increase blood flow and",
+    "Here is a recipe for a healthy breakfast that is quick and easy to make:\n\n**Avocado Toast with Egg and Spinach**\n\nIngredients:\n- 2 slices of whole grain bread\n- 1 avocado\n- 1 tablespoon of lemon",
+    "Healthy Veggie Omelette Recipe\n\nIngredients:\n- 2 large eggs\n- 1/2 cup diced vegetables (such as bell peppers, onions, mushrooms, spinach)\n- 1/8 teaspoon salt\n- 1",
+    "1. Greek Yogurt Parfait\n\nIngredients:\n- 1 cup nonfat Greek yogurt\n- 1/2 cup mixed berries (fresh or frozen)\n- 1/4 cup low-fat granola\n- 1 tbsp honey"
+  ]
+}
