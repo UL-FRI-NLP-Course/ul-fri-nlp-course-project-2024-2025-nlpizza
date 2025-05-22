@@ -1,13 +1,3 @@
-
-source ~/.bashrc
-conda activate posixenv
-
-start=$((SLURM_ARRAY_TASK_ID * 100))
-end=$((start + 100))
-
-python run_posix.py $start $end
-
-
 #!/bin/bash
 #SBATCH --job-name=posix_eval
 #SBATCH --output=logs/posix_%A_%a.log
@@ -31,4 +21,4 @@ export TECHNIQUE=chain_of_thought    # can be: None, chain_of_thought, self_refi
 export MODEL_ID=tiiuae/falcon-7b-instruct
 
 # Run script (automatically uses $SLURM_ARRAY_TASK_ID)
-python posix_eval.py
+python run_posix_data_alpca_extended.py
