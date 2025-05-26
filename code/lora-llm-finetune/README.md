@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```
 
 ### Running the Script
-The script is configurable with arguments for model name, dataset path, LoRA settings, number of groups to sample, and more. Example of training Falcon-7B instruct model.
+The script is configurable with arguments for model name, dataset path, LoRA settings, number of groups to sample, and more. Here's an example of training Falcon-7B instruct model:
 
 ```bash
 python finetune.py \
@@ -83,10 +83,6 @@ model = PeftModel.from_pretrained(model, "falcon7b_lora_output")
 tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
 ```
 
-
----
-
-```markdown
 ## Credits
 
 This setup builds on the following work:
@@ -96,4 +92,5 @@ This setup builds on the following work:
 
 - **POSIX: A Prompt Sensitivity Index For Large Language Models**  
   Chatterjee et al. (2024) — [https://arxiv.org/abs/2410.02185](https://arxiv.org/abs/2410.02185)
-```
+
+---
