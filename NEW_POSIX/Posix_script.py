@@ -153,7 +153,7 @@ def process_group(entries, tokenizer, model, technique=None):
         resp = "" # The model's response
 
         if technique == 'chain_of_thought':
-            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\nTask: {raw_instruction} Let's think step by step."
+            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\n {raw_instruction} Let's think step by step."
             resp = _generate_response(fmt, tokenizer, model, **generation_params)
             
         elif technique == 'self_refinement':
@@ -161,36 +161,65 @@ def process_group(entries, tokenizer, model, technique=None):
             # Example specific params
             
             # First, generate a rewrite of the prompt
-            rewrite_prompt_for_model = f"Your role is to rewrite prompts concisely for clarity.\n\nTask: Rewrite this prompt for clarity:\n{raw_instruction}\n\nRewritten prompt:"
+            rewrite_prompt_for_model = f"Your role is to rewrite prompts concisely for clarity.\n\n Rewrite this prompt for clarity:\n{raw_instruction}\n\nRewritten prompt:"
             rewrite = _generate_response(rewrite_prompt_for_model, tokenizer, model, **generation_params)
             
             # Then, use the rewritten prompt to get the final answer
-            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\nTask: {rewrite}"
+            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\n {rewrite}"
             resp = _generate_response(fmt, tokenizer, model, **generation_params)
 
         elif technique == 'self_consistency':
-            base_prompt_for_candidates = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\nTask: {raw_instruction} Let's think step by step."
+            base_prompt_for_candidates = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\n {raw_instruction} Let's think step by step."
             
             # Generate multiple candidates
-            cand = [_generate_response(base_prompt_for_candidates, tokenizer, model, **generation_params) for _ in range(3)]
+            num_candidates = 3 # Number of candidates to generate
+            candidates = [_generate_response(base_prompt_for_candidates, tokenizer, model, **generation_params) for _ in range(num_candidates)]
             
-            # Filter out potentially bad candidates
-            cand = [c for c in cand if len(c.strip()) > 10]
-            if not cand:
-                cand = [_generate_response(base_prompt_for_candidates, tokenizer, model, **generation_params)]
-
-            choices = '\n'.join(f"{i+1}. {c}" for i,c in enumerate(cand))
+            # Filter out potentially bad candidates (e.g., very short)
+            candidates = [c for c in candidates if len(c.strip()) > 10]
             
-            # Meta-evaluator prompt (often more deterministic)
-            meta_eval_gen_params = generation_params # Example specific params
-            fmt = f"You are a meta-evaluator. Evaluate the following candidates and select the best answer for the question: '{raw_instruction}'\n\nCandidates:\n{choices}\n\nPreferred answer:"
-            resp = _generate_response(fmt, tokenizer, model, **meta_eval_gen_params)
-
+            # If after filtering, we have no candidates or too few, try to generate at least one default
+            if not candidates:
+                candidates = [_generate_response(base_prompt_for_candidates, tokenizer, model, **generation_params)]
+            
+            # Create a numbered list of candidates for the meta-evaluator
+            choices_list_str = '\n'.join(f"Candidate {i+1}: {c}" for i, c in enumerate(candidates))
+            
+            # Meta-evaluator prompt to choose a number
+            evaluator_prompt = (
+                f"You are a meta-evaluator. Evaluate the following candidates and select the best answer for the question: '{raw_instruction}'\n\n"
+                f"Candidates:\n{choices_list_str}\n\n"
+                f"Please choose the number of the best answer (e.g., '1', '2', etc.). Your choice:"
+            )
+            
+            # Generate the meta-evaluator's choice (should be a number)
+            chosen_number_str = _generate_response(evaluator_prompt, tokenizer, model, **generation_params)
+            
+            # Attempt to extract the number and select the candidate
+            chosen_index = -1
+            try:
+                # Use regex to find the first number in the string
+                match = re.search(r'\b(\d+)\b', chosen_number_str)
+                if match:
+                    chosen_index = int(match.group(1)) - 1 # Convert to 0-based index
+                
+                if 0 <= chosen_index < len(candidates):
+                    resp = candidates[chosen_index]
+                else:
+                    # Fallback if chosen number is out of range
+                    print(f"Warning: Meta-evaluator chose {chosen_index+1} (out of range). Falling back to first candidate.")
+                    resp = candidates[0] 
+            except ValueError:
+                # Fallback if no valid number can be extracted
+                print(f"Warning: Meta-evaluator did not provide a valid number '{chosen_number_str}'. Falling back to first candidate.")
+                resp = candidates[0]
+            
+            fmt = evaluator_prompt
         elif technique == 'iterative_refinement':
             conversation_history = []
             
             # Initial generation
-            initial_prompt_for_model = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\nTask: {raw_instruction}"
+            initial_prompt_for_model = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\n {raw_instruction}"
             current_response = _generate_response(initial_prompt_for_model, tokenizer, model, **generation_params)
             
             conversation_history.append(f"User: {initial_prompt_for_model}\nAssistant: {current_response}") 
@@ -214,7 +243,7 @@ def process_group(entries, tokenizer, model, technique=None):
             fmt = initial_prompt_for_model # Store the initial formatted prompt for consistency
 
         else: # Default case: No specific technique
-            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\nTask: {raw_instruction}"
+            fmt = f"Your role is to meticulously execute instructions and provide concise, relevant output.\n\n {raw_instruction}"
             resp = _generate_response(fmt, tokenizer, model, **generation_params)
         
         # Collect data for CSV
