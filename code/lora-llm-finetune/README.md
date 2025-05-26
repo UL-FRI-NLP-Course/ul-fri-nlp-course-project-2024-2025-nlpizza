@@ -26,6 +26,7 @@ The expected dataset is a `.jsonl` file with the following fields per line:
   "output": "The feline rested on the rug.",
   "group_id": 42
 }
+```
 
 In our training, we use original and variants of the original prompt for training.
 
@@ -43,6 +44,7 @@ In our training, we use original and variants of the original prompt for trainin
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### Running the Script
 The script is configurable with arguments for model name, dataset path, LoRA settings, number of groups to sample, and more. Example of training Falcon-7B instruct model.
@@ -56,7 +58,7 @@ python finetune.py \
   --lora_r 16 \
   --lora_alpha 32 \
   --target_modules "query_key_value,dense,dense_h_to_4h,dense_4h_to_h"
-
+```
 
 ## Output
 
@@ -68,6 +70,7 @@ falcon7b_lora_output/
 ├── adapter_model.bin
 ├── tokenizer_config.json
 ├── tokenizer.json
+```
 
 These can be loaded at inference time using:
 
@@ -78,7 +81,7 @@ from peft import PeftModel
 model = AutoModelForCausalLM.from_pretrained("tiiuae/Falcon-7B-Instruct")
 model = PeftModel.from_pretrained(model, "falcon7b_lora_output")
 tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
-
+```
 
 
 ---
@@ -93,4 +96,4 @@ This setup builds on the following work:
 
 - **POSIX: A Prompt Sensitivity Index For Large Language Models**  
   Chatterjee et al. (2024) — [https://arxiv.org/abs/2410.02185](https://arxiv.org/abs/2410.02185)
-
+```
