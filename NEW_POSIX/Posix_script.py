@@ -49,12 +49,12 @@ def compute_log_probs_batch(prompts, responses, tokenizer, model):
     full_inputs = [f"{p} {normalize_whitespace(r)}" for p, r in zip(formatted_prompts, responses)]
     
     # Ensure consistent tokenization with max_length and truncation
-    enc = tokenizer(full_inputs, return_tensors='pt', padding=True, truncation=True, max_length=tokenizer.model_max_length)
+    enc = tokenizer(full_inputs, return_tensors='pt',  padding=True, truncation=True, max_length=4096)
     input_ids = enc.input_ids.to(model.device)
     attn_mask = enc.attention_mask.to(model.device)
     
     # Recalculate prompt lengths based on the actual formatted prompts for log_probs
-    prompt_lens = [len(tokenizer(p, return_tensors='pt', truncation=True, max_length=tokenizer.model_max_length).input_ids[0]) for p in formatted_prompts]
+    prompt_lens = [len(tokenizer(p, return_tensors='pt').input_ids[0]) for p in formatted_prompts]
     
     labels = input_ids.clone().fill_(-100)
     for i, pl in enumerate(prompt_lens):
