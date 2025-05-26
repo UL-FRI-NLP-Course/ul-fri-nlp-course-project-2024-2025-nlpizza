@@ -1,4 +1,4 @@
-# Natural language processing course: Improving Prompt Sensitivity in Large Language Models`
+# Natural language processing course: `Improving Prompt Sensitivity in Large Language Models`
 
 This repository contains the codebase, data, models, and report for our project on improving **prompt sensitivity** in Large Language Models (LLMs). We explore both inference-time prompting strategies and training-time fine-tuning methods to reduce variability in outputs across semantically equivalent prompt variants. This is Project 3 which is part of the Natural Language Processing course for the academic year 2024/2025. 
 
