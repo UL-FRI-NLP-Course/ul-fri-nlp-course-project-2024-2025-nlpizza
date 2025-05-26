@@ -1,6 +1,6 @@
 # LoRA Finetuning on Prompt Variants
 
-This folder contains one of the experimental techniques in our broader project on improving the sensitivity of large language models (LLMs). Specifically, this module applies **Low-Rank Adaptation (LoRA)** for **parameter-efficient fine-tuning** using **prompt variant groupings** to reduce prompt sensitivity. This folder provides a general-purpose framework for fine-tuning causal LLMs. The training setup is model-agnostic and supports any HuggingFace-compatible causal language model (e.g., Falcon, Mistral, LLaMA).
+This folder contains one of the experimental techniques in our broader project on improving the prompt sensitivity of large language models (LLMs). Specifically, this module applies **Low-Rank Adaptation (LoRA)** for **parameter-efficient fine-tuning** using **prompt variant groupings** to reduce prompt sensitivity. This folder provides a general-purpose framework for fine-tuning causal LLMs. The training setup is model-agnostic and supports any HuggingFace-compatible causal language model (e.g., Falcon, Mistral, LLaMA).
 
 
 ## Objective
