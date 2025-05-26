@@ -5,7 +5,7 @@ This folder contains one of the experimental techniques in our broader project o
 
 ## Objective
 
-Language models often respond inconsistently when the wording of a prompt changes, even if the underlying intent is the same. This sensitivity can reduce reliability and generalization. In this experiment, we fine-tune a causal LLM using grouped prompt variants—multiple instructions that share the same meaning and target output.
+Language models often respond inconsistently when the wording of a prompt changes, even if the underlying intent is the same. This sensitivity can reduce reliability and generalization. In this experiment, we fine-tune a causal LLM using grouped prompt variants (multiple instructions that share the same meaning and target output).
 
 By training on this structured dataset, the model is encouraged to:
 - Respond more consistently across paraphrased inputs
@@ -26,6 +26,7 @@ The expected dataset is a `.jsonl` file with the following fields per line:
   "output": "The feline rested on the rug.",
   "group_id": 42
 }
+
 In our training, we use original and variants of the original prompt for training.
 
 
@@ -60,6 +61,7 @@ python finetune.py \
 ## Output
 
 After training, the model and LoRA adapters will be saved to the specified output directory:
+
 ```pgqsl
 falcon7b_lora_output/
 ├── adapter_config.json
