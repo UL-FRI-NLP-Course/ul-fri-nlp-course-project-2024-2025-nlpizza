@@ -8,6 +8,7 @@ from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from collections import defaultdict
 import torch.nn.functional as F
+from peft import PeftModel
 
 # --- Configuration and Environment Variables ---
 TASK_ID = int(os.getenv('SLURM_ARRAY_TASK_ID', '0'))
@@ -324,9 +325,12 @@ if __name__=='__main__':
 
     # Load Model
     print('Loading model...')
-    model = AutoModelForCausalLM.from_pretrained(FINETUNE_PATH if FINETUNE_FLAG else MODEL_ID, 
-                                                torch_dtype=torch.float16, 
-                                                device_map='auto')
+    if FINETUNE_FLAG:
+        base_model = AutoModelForCausalLM.from_pretrained(MODEL_ID, torch_dtype=torch.float16, device_map='auto')
+        model = PeftModel.from_pretrained(base_model, FINETUNE_PATH)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(MODEL_ID, torch_dtype=torch.float16, device_map='auto')
+
     model.eval() # Set model to evaluation mode (disables dropout, etc.)
     print('Model loaded. Starting main processing loop...')
     
