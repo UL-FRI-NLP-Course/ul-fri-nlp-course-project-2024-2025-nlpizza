@@ -167,6 +167,7 @@ tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
 
+### Option A: Local Run 
 From the base folder of the repository, run the following: 
 ```bash
 cd code/POSIX
