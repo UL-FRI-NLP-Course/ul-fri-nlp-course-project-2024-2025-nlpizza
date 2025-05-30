@@ -18,7 +18,6 @@ FINETUNE_PATH = os.getenv('FINETUNE_PATH', '')
 MODEL_ID = os.getenv('MODEL_ID', 'tiiuae/falcon-7b-instruct')
 INPUT_FILE = os.getenv('INPUT_FILE', 'alpaca_prompts_extended.json')
 
-# --- Utility Functions (Minimal) ---
 
 # --- Batched Log-Prob Computation ---
 def compute_log_probs_batch(prompts, responses, tokenizer, model):
@@ -26,7 +25,6 @@ def compute_log_probs_batch(prompts, responses, tokenizer, model):
     Computes log-probabilities for generated responses given prompts in a batch.
     Prompts here are the *formatted* prompts as given to the model for generation.
     """
-    # Create full input strings by concatenating formatted prompt and response
     # Responses are stripped to handle decoding artifacts, but original prompts are untouched
     full_inputs = [f"{p}{r.strip()}" for p, r in zip(prompts, responses)]
     
@@ -140,10 +138,7 @@ def process_group(entries, tokenizer, model, technique=None):
     perturbation_types = []     # Type of perturbation for the entry
 
     # Default generation parameters to use for main response generation
-    generation_params = {'max_new_tokens' : 200} # Using empty dict to signal use model defaults
-
-    # Parameters for iterative refinement, if different from general generation
-    iterative_gen_params = {} # Also using model defaults here
+    generation_params = {'max_new_tokens' : 200}
 
     for e in entries:
         # `raw_instruction` is the instruction from the dataset, used directly
@@ -157,8 +152,6 @@ def process_group(entries, tokenizer, model, technique=None):
             resp = _generate_response(fmt, tokenizer, model, **generation_params)
             
         elif technique == 'self_refinement':
-            # Parameters for the rewrite generation (can be different from main generation)
-            # Example specific params
             
             # First, generate a rewrite of the prompt
             rewrite_prompt_for_model = f"Your role is to rewrite prompts concisely for clarity.\n\n Rewrite this prompt for clarity:\n{raw_instruction}\n\nRewritten prompt:"
@@ -175,8 +168,8 @@ def process_group(entries, tokenizer, model, technique=None):
             num_candidates = 3 # Number of candidates to generate
             candidates = [_generate_response(base_prompt_for_candidates, tokenizer, model, **generation_params) for _ in range(num_candidates)]
             
-            # Filter out potentially bad candidates (e.g., very short)
-            candidates = [c for c in candidates if len(c.strip()) > 10]
+            # Filter out potentially bad candidates
+            candidates = [c for c in candidates if len(c.strip()) > 5]
             
             # If after filtering, we have no candidates or too few, try to generate at least one default
             if not candidates:
