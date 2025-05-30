@@ -60,16 +60,11 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 
 ## Repository Structure
 ```graphql
-improving-prompt-sensitivity/
-│
+
 ├── data/
-│   ├── raw/                     # Original POSIX and Alpaca-style prompt variant data
-│   ├── processed/               # Annotated and LLM-extended variants with perturbation types and targets
-│   └── sample/                  # Minimal working examples for testing and reproducibility
+│   └── alpaca_prompts.json      # Original POSIX and Alpaca-style prompt variant data
 │
 ├── models/                      # Fine-tuned LoRA weights and saved checkpoints
-│
-├── notebooks/                   # Jupyter notebooks for analysis and visualization
 │
 ├── reports/
 │   ├── fig/                     # Generated figures for the final report
@@ -79,25 +74,28 @@ improving-prompt-sensitivity/
 │   ├── ds_report.cls            # Custom LaTeX document class
 │   └── report.pdf               # Compiled PDF report
 │
-├── src/
-│   ├── data/                    # Scripts for preprocessing, grouping, and augmenting prompt variants
+├── code/
+│   ├── lora-llm-finetune/        # Training-time methods (LoRA, PEFT)
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
+│   │   ├── finetune.py           # Fine-tuning on grouped prompt variants
+│   │   ├── sft_train.jsonl       # training set for fine-tuning 
+│   └── └── run_finetune.slurm    # SLURM script for running LoRA fine-tuning on HPC
 │
-│   ├── finetune/                # Training-time methods (LoRA, PEFT)
-│   │   ├── train_lora.py        # Fine-tuning on grouped prompt variants
-│   │   └── submit_lora.slurm    # SLURM script for running LoRA fine-tuning on HPC
-│
-│   ├── posix_eval/              # Inference-time prompting + POSIX scoring
-│   │   ├── run_prompting.py     # Runs inference with CoT, Self-Consistency, etc.
-│   │   ├── compute_posix.py     # Computes Prompt Sensitivity Index
-│   │   └── submit_posix_eval.slurm  # SLURM job script for POSIX evaluation
+│   ├── POSIX/                   # Inference-time prompting + POSIX scoring
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
+│   │   ├── Posix_script.py       # Runs inference with CoT, Self-Consistency, etc.
+│   │   ├── posix_general.slurm    # SLURM job script for POSIX evaluation
+│   │   ├── sft_test.jsonl        # test set for evaluation
+│   └── └── Posix_analysis.ipynb  #Jupyter Notebook analysing results
 │
 │   ├── alpaca_eval/             # LLM-as-a-judge evaluation framework
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
 │   │   ├── eval_judge.py        # Uses an LLM to judge consistency/quality of outputs
-│   │   └── submit_alpaca_eval.slurm  # SLURM script for LLM-as-judge evaluation
+│   └── └── submit_alpaca_eval.slurm  # SLURM script for LLM-as-judge evaluation
 │
-├── README.md                    # Project overview, reproducibility guide
-├── requirements.txt             # Pinned dependencies for environment setup
-
+├── report.pdf                   # Final report of the project
+│
+└── README.md                    # Project overview, reproducibility guide
 
 ```
 ## Reproducibility
