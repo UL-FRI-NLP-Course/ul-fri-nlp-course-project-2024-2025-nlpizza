@@ -49,6 +49,7 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 ### Fine-Tuning (PEFT with LoRA)
 - Falcon-7B
 - Falcon-RW-1B
+- LLaMA-2 7B
 - Mistral-7B
 
 ### Evaluation Methods
