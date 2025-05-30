@@ -10,8 +10,8 @@
 #SBATCH --array=0-99              # 100 jobs
 
 # Load environment (modify as needed)
-module load Python/3.10.8-GCCcore-12.2.0
-source GC/bin/activate
+# If you are not running inside an enviroment add the source of the enviroment here
+
 
 # Set technique and model
 #export TECHNIQUE="chain_of_tought"   # can be: None, chain_of_thought, self_refinement, self_consistency, or 'iterative_refinement'
