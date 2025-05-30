@@ -137,7 +137,7 @@ sbatch run_finetune.slurm tiiuae/falcon-7b q_proj,k_proj,v_proj,o_proj
 ```
 This command loads the model tiiuae/falcon-rw-1b from Hugging Face and applies LoRA to the attention modules (q_proj,k_proj,v_proj,o_proj) to finetune for the prompt variants. 
 
-```
+
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
 
