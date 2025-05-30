@@ -164,6 +164,8 @@ model = AutoModelForCausalLM.from_pretrained("tiiuae/Falcon-7B-Instruct")
 model = PeftModel.from_pretrained(model, "falcon7b_lora_output")
 tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
 ```
+All our fine-tuned models are present at `/d/hpc/projects/onj_fri/gk40784/pt2/output/`
+
 
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
@@ -228,9 +230,9 @@ summary_scores_table.csv
 Navigate to your project folder:
 ```bash
 cd /d/hpc/projects/FRI/ma76193
-
+```
 Run the script with:
-
+```bash
 python judge_model_eval.py \
   --base_dir /d/hpc/projects/FRI/ma76193 \
   --judge_model mistralai/Mistral-7B-Instruct-v0.1 \
@@ -239,6 +241,7 @@ python judge_model_eval.py \
   --judge_model can be any HF-compatible judge model (e.g. mistralai/Mistral-7B-Instruct-v0.1).
 
 --target_model can be any model you want to evaluate.
+```
 
 How to Run on SLURM HPC
 
@@ -246,10 +249,10 @@ Use the provided SLURM batch file to run the evaluation on a GPU node.
 
 Example:
 
-
+```bash
 sbatch run_alpaca_only.sh mistralai/Mistral-7B-Instruct-v0.1 tiiuae/falcon-7b-instruct
-
+```
 arg1: Judge model name or path.
 
 arg2: Target model name or path.
-```
+
