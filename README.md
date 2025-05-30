@@ -112,20 +112,11 @@ We recommend Python 3.10+. Create a virtual environment and install dependencies
 ```bash
 git clone https://github.com/UL-FRI-NLP-Course/ul-fri-nlp-course-project-2024-2025-nlpizza.git
 cd ul-fri-nlp-course-project-2024-2025-nlpizza
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
 ```
 
 ## 2. Prepare the data
 
-The data/processed/ directory already contains annotated and LLM-extended prompt variant groups with named perturbation types and target outputs.
-
-If you want to reproduce the step of annotating and extending the Alpaca dataset from POSIX, use: 
-```bash
-python src/data/group_variants.py
-```
-This step is optional — all evaluations and fine-tuning can be done directly using the data in data/processed/sft_train.jsonl.
+The code/POSIX/ directory already contains annotated and LLM-extended prompt variant groups with named perturbation types and target outputs - sft_train.jsonl and sft_test.jsonl.
 
 ## 3. Fine-tune the model with LoRA
 To fine-tune a model like Falcon-RW-1B using LoRA, run:
@@ -135,19 +126,67 @@ conda create -n finetune_env python=3.10 -y
 pip install -r requirements.txt
 sbatch run_finetune.slurm tiiuae/falcon-7b q_proj,k_proj,v_proj,o_proj
 ```
-This command loads the model tiiuae/falcon-rw-1b from Hugging Face and applies LoRA to the attention modules (q_proj,k_proj,v_proj,o_proj) to finetune for the prompt variants. 
+This command loads the model `tiiuae/falcon-rw-1b` from Hugging Face and applies LoRA to the attention modules (`q_proj,k_proj,v_proj,o_proj`) to finetune for the prompt variants. 
 
+For the fine-tuning, the expected dataset is a `.jsonl` file with the following fields per line:
+- instruction: the input prompt
+- output: the corresponding target response
+- group_id: identifier for a group of semantically similar prompts
+
+```json
+{
+  "instruction": "Rephrase this sentence: The cat sat on the mat.",
+  "output": "The feline rested on the rug.",
+  "group_id": 42
+}
+```
+In the above script, we use what is already been prepped (`code/POSIX/sft_train.jsonl`). 
+
+The script is configurable with arguments for model name, dataset path, LoRA settings, number of groups to sample, and more. You can edit `run_finetune.py` to do this. Here's an example of training Falcon-7B instruct model:
+```bash
+python finetune.py \
+  --model_name "tiiuae/Falcon-7B-Instruct" \
+  --dataset_path data/sft_train.jsonl \
+  --output_dir falcon7b_lora_output \
+  --quant4bit \
+  --lora_r 16 \
+  --lora_alpha 32 \
+  --target_modules "query_key_value,dense,dense_h_to_4h,dense_4h_to_h"
+```
+After training, the model and LoRA adapters will be saved to the specified output directory:
+
+```pgqsl
+falcon7b_lora_output/
+├── adapter_config.json
+├── adapter_model.bin
+├── tokenizer_config.json
+├── tokenizer.json
+```
+
+These can be loaded at inference time using:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+model = AutoModelForCausalLM.from_pretrained("tiiuae/Falcon-7B-Instruct")
+model = PeftModel.from_pretrained(model, "falcon7b_lora_output")
+tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
+```
 
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
 
 ### Option A: Run locally (for a few groups)
+From the base folder of the repository, run the following: 
 ```bash
+cd code/POSIX
+pip install -r requirements.txt
 export TASK_ID=0
 export BATCH_SIZE=5
 export TECHNIQUE=None
 export MODEL_ID="tiiuae/falcon-rw-1b"
-python src/posix_eval/compute_posix.py
+python Posix_script.py
 ```
 To use a prompting strategy like Chain of Thought:
 ```bash
@@ -161,7 +200,7 @@ export FINETUNE_PATH=models/falcon7b_lora_output/
 ### Option B: Run on SLURM HPC (recommended for full evaluation)
 The script is SLURM-array-ready for parallel POSIX computation:
 ```bash
-sbatch src/posix_eval/submit_posix_eval.slurm
+sbatch posix_general.slurm
 ```
 Each job generates a .csv file with generated responses, formatted prompts, and POSIX scores (overall, per type). The script will also print the average POSIX score for that batch.
 
