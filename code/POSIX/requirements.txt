@@ -1,0 +1,15 @@
+# Core libraries
+torch>=2.0.0
+transformers>=4.38.0
+datasets>=2.14.0
+tokenizers>=0.14.0
+
+# Model-specific support
+accelerate>=0.22.0        
+bitsandbytes>=0.41.0      
+safetensors>=0.3.1        
+
+# Utilities
+pandas>=1.5.3
+numpy>=1.23.5
+tqdm>=4.64.1

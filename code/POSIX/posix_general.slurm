@@ -7,10 +7,7 @@
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=80G
 #SBATCH --time=06:00:00
-#SBATCH --array=0-99              # 50 jobs
-
-#SBATCH --mail-type=END                 # Notify when job ends
-#SBATCH --mail-user=gr88022@student.uni-lj.si
+#SBATCH --array=0-99              # 100 jobs
 
 # Load environment (modify as needed)
 module load Python/3.10.8-GCCcore-12.2.0
