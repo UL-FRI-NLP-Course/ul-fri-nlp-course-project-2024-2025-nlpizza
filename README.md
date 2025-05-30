@@ -110,6 +110,8 @@ To reproduce our results from scratch:
 We recommend Python 3.10+. Create a virtual environment and install dependencies:
 
 ```bash
+git clone https://github.com/UL-FRI-NLP-Course/ul-fri-nlp-course-project-2024-2025-nlpizza.git
+cd ul-fri-nlp-course-project-2024-2025-nlpizza
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -126,18 +128,15 @@ python src/data/group_variants.py
 This step is optional — all evaluations and fine-tuning can be done directly using the data in data/processed/sft_train.jsonl.
 
 ## 3. Fine-tune the model with LoRA
-Option A: Local run (quick example with Falcon-RW-1B)
+To fine-tune a model like Falcon-RW-1B using LoRA, run:
 ```bash
-python src/finetune/finetune.py \
-  --model_name "tiiuae/falcon-rw-1b" \
-  --dataset_path data/processed/sft_train.jsonl \
-  --output_dir models/falcon1b_lora_output \
-  --sample_groups 100 \
-  --epochs 1
+cd code/lora-llm-finetune
+conda create -n finetune_env python=3.10 -y
+pip install -r requirements.txt
+sbatch run_finetune.slurm tiiuae/falcon-7b q_proj,k_proj,v_proj,o_proj
 ```
-Option B: Full SLURM run (on ARNES or other cluster)
-```bash
-sbatch src/finetune/run_finetune.slurm
+This command loads the model tiiuae/falcon-rw-1b from Hugging Face and applies LoRA to the attention modules (q_proj,k_proj,v_proj,o_proj) to finetune for the prompt variants. 
+
 ```
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
