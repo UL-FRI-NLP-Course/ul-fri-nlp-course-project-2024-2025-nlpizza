@@ -1,0 +1,38 @@
+technique,model,perturbation,mean,std
+Chain Of Thought,Llama-2-7b,noise_injection,0.38958695652173914,0.3545512580335196
+Chain Of Thought,Llama-2-7b,original,0.3850281690140845,0.3910362048210949
+Chain Of Thought,Llama-2-7b,paraphrase,0.44314965986394556,0.36332372300213145
+Chain Of Thought,Llama-2-7b,spelling_error,0.3312222222222222,0.3438914472686892
+Chain Of Thought,Llama-2-7b,template_shift,0.376690036900369,0.34743174103433155
+Iterative Refinement,Llama-2-7b,noise_injection,0.47671710526315786,0.3804945791185268
+Iterative Refinement,Llama-2-7b,original,0.42697368421052634,0.3615727487402486
+Iterative Refinement,Llama-2-7b,paraphrase,0.47843161094224923,0.38252737312880475
+Iterative Refinement,Llama-2-7b,spelling_error,0.4166627565982404,0.38144141565833883
+Iterative Refinement,Llama-2-7b,template_shift,0.4480364238410596,0.3790447365287621
+None,Falcon-7b,noise_injection,0.6112531229454307,0.31142346524051756
+None,Falcon-7b,original,0.6709003215434084,0.2778450541330124
+None,Falcon-7b,paraphrase,0.6626343833780161,0.27399988383823765
+None,Falcon-7b,spelling_error,0.6164401654996817,0.3036945309280436
+None,Falcon-7b,template_shift,0.6540321687997233,0.2931447001529893
+None,Llama-2-7b,noise_injection,0.5980898673100121,0.3214608361325395
+None,Llama-2-7b,original,0.6513096960926194,0.2943790362658422
+None,Llama-2-7b,paraphrase,0.6484356314826114,0.2875396691095675
+None,Llama-2-7b,spelling_error,0.5996223897911833,0.31496722047131614
+None,Llama-2-7b,template_shift,0.6404736176935228,0.301693632248476
+Self Refinement,Llama-2-7b,spelling_error,0.3642,0.315924358035274
+Self Refinement,Llama-2-7b,template_shift,0.725,0.31819805153394637
+chain_of_thought,Falcon-7b,noise_injection,0.5798845144356956,0.3074328219884978
+chain_of_thought,Falcon-7b,original,0.6362524115755628,0.2767583206876702
+chain_of_thought,Falcon-7b,paraphrase,0.6309055144586416,0.2794585007340929
+chain_of_thought,Falcon-7b,spelling_error,0.5798238473767886,0.30532226770048737
+chain_of_thought,Falcon-7b,template_shift,0.6395841105354059,0.2826862659770373
+iterative_refinement,Falcon-7b,noise_injection,0.5714390862944162,0.3125504831881294
+iterative_refinement,Falcon-7b,original,0.6107550077041602,0.30471681360090364
+iterative_refinement,Falcon-7b,paraphrase,0.6152174479166667,0.2891051807174662
+iterative_refinement,Falcon-7b,spelling_error,0.5843425925925926,0.3079045261072844
+iterative_refinement,Falcon-7b,template_shift,0.6009168622192425,0.30164882986673414
+self_refinement,Falcon-7b,noise_injection,0.7157101449275363,0.2992288668369215
+self_refinement,Falcon-7b,original,0.692,0.2942200467293755
+self_refinement,Falcon-7b,paraphrase,0.8255208333333334,0.21125138696090923
+self_refinement,Falcon-7b,spelling_error,0.729140350877193,0.2746578259621034
+self_refinement,Falcon-7b,template_shift,0.7089375,0.292541150503245
