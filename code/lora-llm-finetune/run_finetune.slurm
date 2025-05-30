@@ -11,15 +11,13 @@
 #SBATCH --partition=gpu
 
 source ~/.bashrc
-# Conda enviroment according to the requirements.txt file
-conda activate posixenv
 
 cd $SLURM_SUBMIT_DIR
 
 # Example command to run the finetuning script with LoRA on Falcon-7B-Instruct model
 python finetune.py \
     --model_name "tiiuae/Falcon-7B-Instruct" \
-    --dataset_path data/sft_train.jsonl \
+    --dataset_path ../POSIX/sft_train.jsonl \
     --output_dir falcon7b_lora_output \
     --quant4bit \
     --lora_r 16 \

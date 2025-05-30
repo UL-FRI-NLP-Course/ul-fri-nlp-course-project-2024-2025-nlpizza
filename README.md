@@ -49,6 +49,7 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 ### Fine-Tuning (PEFT with LoRA)
 - Falcon-7B
 - Falcon-RW-1B
+- LLaMA-2 7B
 - Mistral-7B
 
 ### Evaluation Methods
@@ -59,45 +60,35 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 
 
 ## Repository Structure
+The key components of this repository are organized as follows:
 ```graphql
-improving-prompt-sensitivity/
-│
 ├── data/
-│   ├── raw/                     # Original POSIX and Alpaca-style prompt variant data
-│   ├── processed/               # Annotated and LLM-extended variants with perturbation types and targets
-│   └── sample/                  # Minimal working examples for testing and reproducibility
+│   └── alpaca_prompts.json      # Original POSIX and Alpaca-style prompt variant data
 │
 ├── models/                      # Fine-tuned LoRA weights and saved checkpoints
 │
-├── notebooks/                   # Jupyter notebooks for analysis and visualization
+├── code/
+│   ├── lora-llm-finetune/        # Training-time methods (LoRA, PEFT)
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
+│   │   ├── finetune.py           # Fine-tuning on grouped prompt variants
+│   └── └── run_finetune.slurm    # SLURM script for running LoRA fine-tuning on HPC
 │
-├── reports/
-│   ├── fig/                     # Generated figures for the final report
-│   ├── code/                    # Highlighted code snippets for inclusion in LaTeX
-│   ├── report.tex               # LaTeX source for the final report
-│   ├── report.bib               # BibLaTeX bibliography
-│   ├── ds_report.cls            # Custom LaTeX document class
-│   └── report.pdf               # Compiled PDF report
-│
-├── src/
-│   ├── data/                    # Scripts for preprocessing, grouping, and augmenting prompt variants
-│
-│   ├── finetune/                # Training-time methods (LoRA, PEFT)
-│   │   ├── train_lora.py        # Fine-tuning on grouped prompt variants
-│   │   └── submit_lora.slurm    # SLURM script for running LoRA fine-tuning on HPC
-│
-│   ├── posix_eval/              # Inference-time prompting + POSIX scoring
-│   │   ├── run_prompting.py     # Runs inference with CoT, Self-Consistency, etc.
-│   │   ├── compute_posix.py     # Computes Prompt Sensitivity Index
-│   │   └── submit_posix_eval.slurm  # SLURM job script for POSIX evaluation
+│   ├── POSIX/                   # Inference-time prompting + POSIX scoring
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
+│   │   ├── Posix_script.py       # Runs inference with CoT, Self-Consistency, etc.
+│   │   ├── posix_general.slurm    # SLURM job script for POSIX evaluation
+│   │   ├── sft_train.jsonl       # training set for fine-tuning 
+│   │   ├── sft_test.jsonl        # test set for evaluation
+│   └── └── Posix_analysis.ipynb  #Jupyter Notebook analysing results
 │
 │   ├── alpaca_eval/             # LLM-as-a-judge evaluation framework
+│   │   ├── requirements.txt      # Pinned dependencies for environment setup
 │   │   ├── eval_judge.py        # Uses an LLM to judge consistency/quality of outputs
-│   │   └── submit_alpaca_eval.slurm  # SLURM script for LLM-as-judge evaluation
+│   └── └── submit_alpaca_eval.slurm  # SLURM script for LLM-as-judge evaluation
 │
-├── README.md                    # Project overview, reproducibility guide
-├── requirements.txt             # Pinned dependencies for environment setup
-
+├── report.pdf                   # Final report of the project
+│
+└── README.md                    # Project overview, reproducibility guide
 
 ```
 ## Reproducibility
@@ -110,45 +101,83 @@ To reproduce our results from scratch:
 We recommend Python 3.10+. Create a virtual environment and install dependencies:
 
 ```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+git clone https://github.com/UL-FRI-NLP-Course/ul-fri-nlp-course-project-2024-2025-nlpizza.git
+cd ul-fri-nlp-course-project-2024-2025-nlpizza
 ```
 
 ## 2. Prepare the data
 
-The data/processed/ directory already contains annotated and LLM-extended prompt variant groups with named perturbation types and target outputs.
-
-If you want to reproduce the step of annotating and extending the Alpaca dataset from POSIX, use: 
-```bash
-python src/data/group_variants.py
-```
-This step is optional — all evaluations and fine-tuning can be done directly using the data in data/processed/sft_train.jsonl.
+The code/POSIX/ directory already contains annotated and LLM-extended prompt variant groups with named perturbation types and target outputs - sft_train.jsonl and sft_test.jsonl.
 
 ## 3. Fine-tune the model with LoRA
-Option A: Local run (quick example with Falcon-RW-1B)
+To fine-tune a model like Falcon-RW-1B using LoRA, run:
 ```bash
-python src/finetune/finetune.py \
-  --model_name "tiiuae/falcon-rw-1b" \
-  --dataset_path data/processed/sft_train.jsonl \
-  --output_dir models/falcon1b_lora_output \
-  --sample_groups 100 \
-  --epochs 1
+cd code/lora-llm-finetune
+conda create -n finetune_env python=3.10 -y
+pip install -r requirements.txt
+sbatch run_finetune.slurm tiiuae/falcon-7b q_proj,k_proj,v_proj,o_proj
 ```
-Option B: Full SLURM run (on ARNES or other cluster)
+This command loads the model `tiiuae/falcon-rw-1b` from Hugging Face and applies LoRA to the attention modules (`q_proj,k_proj,v_proj,o_proj`) to finetune for the prompt variants. 
+
+For the fine-tuning, the expected dataset is a `.jsonl` file with the following fields per line:
+- instruction: the input prompt
+- output: the corresponding target response
+- group_id: identifier for a group of semantically similar prompts
+
+```json
+{
+  "instruction": "Rephrase this sentence: The cat sat on the mat.",
+  "output": "The feline rested on the rug.",
+  "group_id": 42
+}
+```
+In the above script, we use what is already been prepped (`code/POSIX/sft_train.jsonl`). 
+
+The script is configurable with arguments for model name, dataset path, LoRA settings, number of groups to sample, and more. You can edit `run_finetune.py` to do this. Here's an example of training Falcon-7B instruct model:
 ```bash
-sbatch src/finetune/run_finetune.slurm
+python finetune.py \
+  --model_name "tiiuae/Falcon-7B-Instruct" \
+  --dataset_path data/sft_train.jsonl \
+  --output_dir falcon7b_lora_output \
+  --quant4bit \
+  --lora_r 16 \
+  --lora_alpha 32 \
+  --target_modules "query_key_value,dense,dense_h_to_4h,dense_4h_to_h"
 ```
+After training, the model and LoRA adapters will be saved to the specified output directory:
+
+```pgqsl
+falcon7b_lora_output/
+├── adapter_config.json
+├── adapter_model.bin
+├── tokenizer_config.json
+├── tokenizer.json
+```
+
+These can be loaded at inference time using:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+model = AutoModelForCausalLM.from_pretrained("tiiuae/Falcon-7B-Instruct")
+model = PeftModel.from_pretrained(model, "falcon7b_lora_output")
+tokenizer = AutoTokenizer.from_pretrained("falcon7b_lora_output")
+```
+
 ## 4. Evaluation with POSIX
 Evaluate output stability across prompt variants using the Prompt Sensitivity Index.  Supports both base and fine-tuned models, and allows switching between prompting techniques. 
 
-### Option A: Run locally (for a few groups)
+### Option A: Local Run 
+From the base folder of the repository, run the following: 
 ```bash
+cd code/POSIX
+pip install -r requirements.txt
 export TASK_ID=0
 export BATCH_SIZE=5
 export TECHNIQUE=None
 export MODEL_ID="tiiuae/falcon-rw-1b"
-python src/posix_eval/compute_posix.py
+python Posix_script.py
 ```
 To use a prompting strategy like Chain of Thought:
 ```bash
@@ -162,7 +191,7 @@ export FINETUNE_PATH=models/falcon7b_lora_output/
 ### Option B: Run on SLURM HPC (recommended for full evaluation)
 The script is SLURM-array-ready for parallel POSIX computation:
 ```bash
-sbatch src/posix_eval/submit_posix_eval.slurm
+sbatch posix_general.slurm
 ```
 Each job generates a .csv file with generated responses, formatted prompts, and POSIX scores (overall, per type). The script will also print the average POSIX score for that batch.
 
