@@ -14,7 +14,7 @@ This repository contains the codebase, data, models, and report for our project 
   - [2. Prepare the data](#2-prepare-the-data)
   - [3. Fine-tune the model with LoRA](#3-fine-tune-the-model-with-lora)
   - [4. Evaluation with POSIX](#4-evaluation-with-posix)
-  - [5. Evaluation with AlpacaEval (LLM-as-a-Judge)](#5-evaluation-with-alpacaeval-llm-as-a-judge)
+  - [5. Evaluation with AlpacaEval (LLM-as-a-Judge)](#5-evaluation-with-llm-as-a-judge)
 
 
 
