@@ -78,13 +78,13 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 │   ├── lora-llm-finetune/        # Training-time methods (LoRA, PEFT)
 │   │   ├── requirements.txt      # Pinned dependencies for environment setup
 │   │   ├── finetune.py           # Fine-tuning on grouped prompt variants
-│   │   ├── sft_train.jsonl       # training set for fine-tuning 
 │   └── └── run_finetune.slurm    # SLURM script for running LoRA fine-tuning on HPC
 │
 │   ├── POSIX/                   # Inference-time prompting + POSIX scoring
 │   │   ├── requirements.txt      # Pinned dependencies for environment setup
 │   │   ├── Posix_script.py       # Runs inference with CoT, Self-Consistency, etc.
 │   │   ├── posix_general.slurm    # SLURM job script for POSIX evaluation
+│   │   ├── sft_train.jsonl       # training set for fine-tuning 
 │   │   ├── sft_test.jsonl        # test set for evaluation
 │   └── └── Posix_analysis.ipynb  #Jupyter Notebook analysing results
 │
