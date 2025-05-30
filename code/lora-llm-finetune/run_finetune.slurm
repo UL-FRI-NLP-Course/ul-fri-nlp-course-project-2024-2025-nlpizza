@@ -12,7 +12,7 @@
 
 source ~/.bashrc
 # Conda enviroment according to the requirements.txt file
-conda activate posixenv
+conda activate finetune_env
 
 cd $SLURM_SUBMIT_DIR
 
