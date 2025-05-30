@@ -59,20 +59,12 @@ We experimented with multiple open-weight Large Language Models (LLMs) at the 7B
 
 
 ## Repository Structure
+The key components of this repository are organized as follows:
 ```graphql
-
 ├── data/
 │   └── alpaca_prompts.json      # Original POSIX and Alpaca-style prompt variant data
 │
 ├── models/                      # Fine-tuned LoRA weights and saved checkpoints
-│
-├── reports/
-│   ├── fig/                     # Generated figures for the final report
-│   ├── code/                    # Highlighted code snippets for inclusion in LaTeX
-│   ├── report.tex               # LaTeX source for the final report
-│   ├── report.bib               # BibLaTeX bibliography
-│   ├── ds_report.cls            # Custom LaTeX document class
-│   └── report.pdf               # Compiled PDF report
 │
 ├── code/
 │   ├── lora-llm-finetune/        # Training-time methods (LoRA, PEFT)
